@@ -1,0 +1,68 @@
+
+/*mentor document:
+{
+    mentor_id:1,2,..n,
+    mentor_name:"arvind",
+    joining_date:"02-02-20",
+    students:[{}]
+}student document:
+{
+    student_id:1,2,..n,
+    student_name:"akash",
+    joining_date:"02-02-20",
+    batch:1
+    subjects:
+    mentor:
+}
+ */
+
+
+
+app.get("/student",async (req,res)=>{
+    try {
+        const client = await mongoclient.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
+        const db = client.db('projectrestapi')
+        let data  = await db.collection('mentostudents').find().toArray()
+         res.status(200).json({
+            "message":"ok",
+            "data":data
+
+            })
+        }
+        catch(e){
+            console.log(e)
+        }}    
+)
+
+app.post("/student",async (req,res)=>{
+    try {
+        const client = await mongoclient.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
+        const db = client.db('projectrestapi')
+        let data  = await db.collection('mentostudents').insertOne(req.body)
+         res.status(200).json({
+            "message":"ok",
+            "data":data
+            })
+        }
+        catch(e){
+            console.log(e)
+        }}    
+)
+
+app.put("/mentor",async (req,res)=>{
+    try {
+        console.log(req.body["filter"],req.body["update"])
+        const client = await mongoclient.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
+        const db = client.db('projectrestapi')
+        
+        let data  = db.collection('mentostudentm').find().toArray()
+         res.status(200).json({
+            "message":"ok",
+            "data":data
+            })
+        }
+        catch(e){
+            console.log(e)
+        }}    
+)
+
